@@ -6,11 +6,11 @@
 --------------------------------------------------------------------------------
 -- Fixed by LiWinDom (STEAM_0:0:190697714)
 --------------------------------------------------------------------------------
+
 Metrostroi.DefineSystem("81_740_Ticker")
 TRAIN_SYSTEM.DontAccelerateSimulation = true
 
 function TRAIN_SYSTEM:Initialize()
-
 end
 
 if TURBOSTROI then return end
@@ -91,6 +91,58 @@ if CLIENT then
 end
 
 function TRAIN_SYSTEM:Initialize()
+    self.Weekdays = {} --TODO: через отдельный файл
+    self.Weekdays["Mon"] = "ПН"
+    self.Weekdays["Tue"] = "ВТ"
+    self.Weekdays["Wed"] = "СР"
+    self.Weekdays["Thu"] = "ЧТ"
+    self.Weekdays["Fri"] = "ПТ"
+    self.Weekdays["Sat"] = "СБ"
+    self.Weekdays["Sun"] = "ВС"
+
+    self.ReplaceStations = {}
+    self.EnStations = {} --TODO: через отдельный файл
+    --Pink line
+    self.EnStations["Первомайская"] = "Pervomayskaya"
+    self.EnStations["Зябликово"] = "Zyablikovo"
+    self.EnStations["Партизанская"] = "Partizanskaya"
+    self.EnStations["Гидропарк"] = "Gidropark"
+    --LDL
+    self.EnStations["Дубровка"] = "Dubrovka"
+    self.EnStations["Кожуховская"] = "Kozhuhovskaya"
+    self.EnStations["Печатники"] = "Pechatniki"
+    self.EnStations["Волжская"] = "Volzhskaya"
+    self.EnStations["Зябликово"] = "Zyablikovo"
+    --Kalininskaya
+    self.EnStations["Новокосино"] = "Novokosino"
+    self.EnStations["Новогиреево"] = "Novogireevo"
+    self.EnStations["Перово"] = "Perovo"
+    self.EnStations["Шоссе Энтузиастов"] = "Shosse Entuziastov"
+    self.EnStations["Авиамоторная"] = "Aviamotornaya"
+    self.EnStations["Площадь Ильича"] = "Ploshad Ilycha"
+    self.EnStations["Марксистская"] = "Marksistskaya"
+    self.EnStations["Третьяковская"] = "Tretyakovskaya"
+    --Nekrasovka
+    self.EnStations["Некрасовка"] = "Nekrasovka"
+    self.EnStations["Лухмановская"] = "Luhmanovskaya"
+    self.EnStations["Улица Дмитриевского"] = "Ulitsa Dmitrievskogo"
+    self.EnStations["Косино"] = "Kosino"
+    self.EnStations["Юго-Восточная"] = "Yugo-Vostochnaya"
+    self.EnStations["Окская"] = "Okskaya"
+    self.EnStations["Стахановская"] = "Stahanovskaya"
+    self.EnStations["Нижегородская"] = "Nizhegorodskaya"
+    --Surface
+    self.EnStations["Советская"] = "Sovetskaya"
+    self.EnStations["Артемидовская"] = "Artemidovskaya"
+    self.ReplaceStations["Антиколлаб-ская"] = "Антиколлаборанистическая"
+    self.EnStations["Антиколлаб-ская"] = "Antikollaboranisticheskaya"
+    self.EnStations["Индустриальная"] = "Industrialnaya"
+    self.EnStations["Площадь Восстания"] = "Ploshad Vostaniya"
+    self.EnStations["Куровская"] = "Kurovskaya"
+    self.ReplaceStations["Ул. Кляйнера"] = "Улица Айзека Кляйнера"
+    self.EnStations["Ул. Кляйнера"] = "Ulitsa Ajzeka Klyajnera"
+
+
     self.Advert = 1
     self.AdvertSymbol = 0
     self.CurrentAdvert = ""
@@ -100,6 +152,7 @@ function TRAIN_SYSTEM:Initialize()
     self.ShowStation = false
     self.Station = nil
     self.Next = false
+    self.EnShow = false
 end
 function TRAIN_SYSTEM:CANReceive(source,sourceid,target,targetid,textdata,numdata)
     if textdata == "Curr" then
@@ -130,14 +183,38 @@ function TRAIN_SYSTEM:Think()
                     if self.Station then
                         self.CurColor = Color(0, 255, 0)
                         if self.Next == true then
-                            self.CurrentAdvert = Format("следующая станция %s",self.Station)
+                            self.EnShow = false
+                            if self.ReplaceStations[self.Station] then
+                                self.CurrentAdvert = Format("следующая станция %s.", self.ReplaceStations[self.Station])
+                            else
+                                self.CurrentAdvert = Format("следующая станция %s.", self.Station)
+                            end
+                            if self.EnStations[self.Station] then
+                                self.CurrentAdvert = self.CurrentAdvert..Format(" The next station is \"%s\"", self.EnStations[self.Station])
+                            end
                             self.Status = 2
                         else
                             self.Status = 1
-                            self.CurrentAdvert = Format("станция %s",self.Station)
+                            if self.EnShow == true and self.EnStations[self.Station] then
+                                self.CurrentAdvert = Format("This is \"%s\"", self.EnStations[self.Station])
+                                self.EnShow = false
+                            else
+                                if self.ReplaceStations[self.Station] then
+                                    self.CurrentAdvert = Format("станция %s", self.ReplaceStations[self.Station])
+                                else
+                                    self.CurrentAdvert = Format("станция %s", self.Station)
+                                end
+                                self.EnShow = true
+                            end
 
-                            if utf8.len(self.CurrentAdvert) <= 27 then 
+                            if utf8.len(self.CurrentAdvert) <= 27 then
                                 self.isMoving = false
+                            else
+                                if self.ReplaceStations[self.Station] then
+                                    self.CurrentAdvert = Format("станция %s. This is \"%s\"", self.ReplaceStations[self.Station], self.EnStations[self.Station])
+                                else
+                                    self.CurrentAdvert = Format("станция %s. This is \"%s\"", self.Station, self.EnStations[self.Station])
+                                end
                             end
                         end
                     else
@@ -147,22 +224,10 @@ function TRAIN_SYSTEM:Think()
                     self.isMoving = false
                     self.CurColor = Color(255, 164, 32)
                     self.CurrentAdvert = os.date("%d.%m.%Yг.    %H:%M")
-                    if os.date("%a") == "Mon" then
-                        self.CurrentAdvert = "ПН    "..self.CurrentAdvert
-                    elseif os.date("%a") == "Tue" then
-                        self.CurrentAdvert = "ВТ    "..self.CurrentAdvert
-                    elseif os.date("%a") == "Wed" then
-                        self.CurrentAdvert = "СР    "..self.CurrentAdvert
-                    elseif os.date("%a") == "Thu" then
-                        self.CurrentAdvert = "ЧТ    "..self.CurrentAdvert
-                    elseif os.date("%a") == "Fri" then
-                        self.CurrentAdvert = "ПТ    "..self.CurrentAdvert
-                    elseif os.date("%a") == "Sat" then
-                        self.CurrentAdvert = "СБ    "..self.CurrentAdvert
-                    elseif os.date("%a") == "Sun" then
-                        self.CurrentAdvert = "ВС    "..self.CurrentAdvert
+                    if self.Weekdays[os.date("%a")] then
+                        self.CurrentAdvert = self.Weekdays[os.date("%a")].."    "..self.CurrentAdvert
                     else
-                        self.CurrentAdvert = os.date("%a")
+                        self.CurrentAdvert = os.date("%a").."   "..self.CurrentAdvert
                     end
                     if self.Station ~= nil then
                         self.Status = 1
