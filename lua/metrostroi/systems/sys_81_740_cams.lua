@@ -6,6 +6,7 @@ TRAIN_SYSTEM.DontAccelerateSimulation = true
 
 function TRAIN_SYSTEM:Initialize()
 	self.State = -1
+	self.Service = 0
 	self.Selected = 0
 	
 	self.Train:LoadSystem("CAMS5","Relay","Switch",{bass=true})
@@ -73,7 +74,22 @@ if SERVER then
 	function TRAIN_SYSTEM:Trigger(name,value)
 		local name = name:gsub("CAMS","")
 		local Train = self.Train
-		if self.State >= 0 then
+		if self.State == 2 and self.Service == 1 then
+			if value then
+				self.State = 0
+				self.Service = 0
+			end
+		end
+		if self.State == -1 then
+			if value then
+				local statetimer = Train:GetNW2Int("CAMSTimer",0)/20
+				if statetimer > -11.5 and statetimer < -9.1 then
+					self.State = 1
+					self.Service = 1
+				end
+			end
+		end
+		if self.State >= 0 and self.Service == 0 then
 			local numname = tonumber(name) or 0
 			if value then
 				local WagNum = Train:GetNW2Int("CAMSWagNum")
@@ -125,7 +141,11 @@ if SERVER then
 		self.Power = Train.Electric.Battery80V > 62 and Train.SF6.Value > 0.5 and Train.SFV33.Value > 0.5
 		if not self.Power and self.State ~= -4 then self.LastEntered = 0 self.Selected = 0 self.State = -4 self.StateTimer = nil end
 		--if self.State == -4 and not self.Power then self.StateTimer = CurTime()+math.Rand(10,12) end
-		if self.State == -4 and self.Power then self.State = -3 self.StateTimer = CurTime()+math.Rand(7,9) end
+		if self.State == -4 and self.Power then 
+			self.State = -3 
+			self.StateTimer = CurTime()+math.Rand(7,9) 
+			self.Service = 0
+		end
 		if self.Power and self.State == -3 and CurTime()-self.StateTimer > 0 then
 			self.State = -2
 			self.StateTimer = CurTime()+math.Rand(9,11)
@@ -187,7 +207,12 @@ if SERVER then
 			end		
 		end
 		
+		if self.State == 1 then --service
+		
+		end
+		
 		Train:SetNW2Int("CAMSState",self.State)	
+		Train:SetNW2Int("CAMSService",self.Service)	
 		Train:SetNW2Int("CAMSSelected",self.Selected)	
 		Train:SetNW2Int("CAMSLastSelected",self.LastSelected or 0)
 		Train:SetNW2Int("CAMSLastEntered",self.LastEntered or 0)
@@ -308,10 +333,19 @@ else
 	local blue = Color(0,50,255)
 	local white = Color(255,255,255)
 	local yellow = Color(255,255,0)
+	local black = Color(0,0,0)
+	
+	local gray = Color(200, 200, 200)
+	local magenta = Color(255, 0, 255)
+	local dos_blue = Color(0,50,255)
+	local red = Color (255,0,0)
+	
+	
 	local font = "Metrostroi_740_CAMS"
 	function TRAIN_SYSTEM:CAMS(Train)
 		local scx,scy = self.scalex,self.scaley
 		local state = Train:GetNW2Int("CAMSState",0)
+		local service  = Train:GetNW2Int("CAMSService",0)
 		local sel = Train:GetNW2Int("CAMSSelected",0)
 		local wagnum = Train:GetNW2Int("CAMSWagNum",0)
 		local statetimer = Train:GetNW2Int("CAMSTimer",0)/20
@@ -348,92 +382,101 @@ else
 				draw.SimpleText("CMOS battery failed",font.."4",5,16,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				y=32
 			end
-			if statetimer > -14 and statetimer < -0.5 then
+			if statetimer > -16 and statetimer < -0.5 then
 				draw.SimpleText("Booting from drive C...",font.."4",5,48,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				draw.SimpleText("Starting MS-DOS...",font.."4",5,64,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				y=96
 			end
-			if statetimer > -13.2 and statetimer < -0.5 then
-				draw.SimpleText("HIMEM is testing extended memory...",font.."4",5,112,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				y=112
+			if statetimer > -14.2 and statetimer < -0.5 then
+				draw.SimpleText("HIMEM is testing extended memory...",font.."4",5,96,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				y=96
 				x=393
 			end
-			if statetimer > -10 and statetimer < -0.5 then
-				draw.SimpleText("done.",font.."4",395,112,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+			if statetimer > -12 and statetimer < -0.5 then
+				draw.SimpleText("done.",font.."4",395,96,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=5
-				y=128
+				y=112
 			end
-			if statetimer > -9.7 and statetimer < -0.5 then
-				draw.SimpleText("Unrecognized command in CONFIG.SYS",font.."4",5,144,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				draw.SimpleText("Error in CONFIG.SYS line 2",font.."4",5,160,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				x=5
-				y=176
+			if statetimer > -11.5 and statetimer < -0.5 then
+				draw.SimpleText("Press any key to run setup...",font.."4",5,144,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=323
+				y=144
 			end
-			if statetimer > -9.4 and statetimer < -0.5 then
-				draw.SimpleText("░█████╗░░█████╗░███╗░░░███╗  ░██████╗██╗░░░██╗░██████╗████████╗███████╗███╗░░░███╗░██████╗",font.."4",5,192,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				draw.SimpleText("██╔══██╗██╔══██╗████╗░████║  ██╔════╝╚██╗░██╔╝██╔════╝╚══██╔══╝██╔════╝████╗░████║██╔════╝",font.."4",5,208,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				draw.SimpleText("██║░░╚═╝███████║██╔████╔██║  ╚█████╗░░╚████╔╝░╚█████╗░░░░██║░░░█████╗░░██╔████╔██║╚█████╗░",font.."4",5,224,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				draw.SimpleText("██║░░██╗██╔══██║██║╚██╔╝██║  ░╚═══██╗░░╚██╔╝░░░╚═══██╗░░░██║░░░██╔══╝░░██║╚██╔╝██║░╚═══██╗",font.."4",5,240,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				draw.SimpleText("╚█████╔╝██║░░██║██║░╚═╝░██║  ██████╔╝░░░██║░░░██████╔╝░░░██║░░░███████╗██║░╚═╝░██║██████╔╝",font.."4",5,256,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				draw.SimpleText("░╚════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝  ╚═════╝░░░░╚═╝░░░╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░░░░╚═╝╚═════╝░",font.."4",5,272,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				draw.SimpleText("                                       Version 2.5                                        ",font.."4",5,295,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+			if statetimer > -9 and statetimer < -0.5 then
+				draw.SimpleText("skipped.",font.."4",323,144,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=400
+				y=144
+			end
+			if statetimer > -8.9 and statetimer < -0.5 then
+				draw.SimpleText("Starting systems...",font.."4",5,176,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=150
+				y=192
+			end
+			if statetimer > -8.7 and statetimer < -0.5 then
+				draw.SimpleText("░█████╗░░█████╗░███╗░░░███╗  ░██████╗██╗░░░██╗░██████╗████████╗███████╗███╗░░░███╗░██████╗",font.."4",5,208,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("██╔══██╗██╔══██╗████╗░████║  ██╔════╝╚██╗░██╔╝██╔════╝╚══██╔══╝██╔════╝████╗░████║██╔════╝",font.."4",5,224,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("██║░░╚═╝███████║██╔████╔██║  ╚█████╗░░╚████╔╝░╚█████╗░░░░██║░░░█████╗░░██╔████╔██║╚█████╗░",font.."4",5,240,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("██║░░██╗██╔══██║██║╚██╔╝██║  ░╚═══██╗░░╚██╔╝░░░╚═══██╗░░░██║░░░██╔══╝░░██║╚██╔╝██║░╚═══██╗",font.."4",5,256,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("╚█████╔╝██║░░██║██║░╚═╝░██║  ██████╔╝░░░██║░░░██████╔╝░░░██║░░░███████╗██║░╚═╝░██║██████╔╝",font.."4",5,272,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("░╚════╝░╚═╝░░╚═╝╚═╝░░░░░╚═╝  ╚═════╝░░░░╚═╝░░░╚═════╝░░░░╚═╝░░░╚══════╝╚═╝░░░░░╚═╝╚═════╝░",font.."4",5,288,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("                                       Version 2.6                                        ",font.."4",5,306,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=5
 				y=320
 			end
-			if statetimer > -9.1 and statetimer < -0.5 then
-				draw.SimpleText("Copyright (C) Bayramov Gadjimurad Rosenovich and Prokofiev Arseny Aleksandrovich 2017-2019",font.."4",5,316,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+			if statetimer > -8.65 and statetimer < -0.5 then
+				draw.SimpleText("Copyright (C) Bayramov Gadjimurad Rosenovich and Prokofiev Arseny Aleksandrovich 2017-2019",font.."4",5,320,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=5
 				y=332
 			end
 			if statetimer > -8.0 and statetimer < -0.5 then
-				draw.SimpleText("CAM1...",font.."4",5,336,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				x=96
-				y=336
-			end
-			if statetimer > -7.97 and statetimer < -0.5 then
-				draw.SimpleText("OK!",font.."4",85,336,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				x=124
-				y=336
-			end
-			if statetimer > -7.95 and statetimer < -0.5 then
-				draw.SimpleText("CAM2..." ,font.."4",5,352,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("CAM1...",font.."4",5,352,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=96
 				y=352
 			end
-			if statetimer > -7.93 and statetimer < -0.5 then
+			if statetimer > -7.97 and statetimer < -0.5 then
 				draw.SimpleText("OK!",font.."4",85,352,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=124
 				y=352
 			end
-			if statetimer > -7.90 and statetimer < -0.5 then
-				draw.SimpleText("CAM3...",font.."4",5,368,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-				x=170
+			if statetimer > -7.95 and statetimer < -0.5 then
+				draw.SimpleText("CAM2..." ,font.."4",5,368,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=96
 				y=368
 			end
-			if statetimer > -7.87 and statetimer < -0.5 then
+			if statetimer > -7.93 and statetimer < -0.5 then
 				draw.SimpleText("OK!",font.."4",85,368,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=124
 				y=368
 			end
-			if statetimer > -7.85 and statetimer < -0.5 then
-				draw.SimpleText("CAM4...",font.."4",5,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+			if statetimer > -7.90 and statetimer < -0.5 then
+				draw.SimpleText("CAM3...",font.."4",5,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=170
 				y=384
 			end
-			if statetimer > -7.82 and statetimer < -0.5 then
+			if statetimer > -7.87 and statetimer < -0.5 then
 				draw.SimpleText("OK!",font.."4",85,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=124
 				y=384
 			end
+			if statetimer > -7.85 and statetimer < -0.5 then
+				draw.SimpleText("CAM4...",font.."4",5,400,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=170
+				y=400
+			end
+			if statetimer > -7.82 and statetimer < -0.5 then
+				draw.SimpleText("OK!",font.."4",85,400,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=124
+				y=400
+			end
 			if statetimer > -7 and statetimer < -0.5 then
-				draw.SimpleText("Preparing GUI...",font.."4",5,416,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("Preparing GUI...",font.."4",5,432,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=183
-				y=416
+				y=432
 			end
 			if statetimer > -0.9 and statetimer < -0.5 then
-				draw.SimpleText("Starting GUI...",font.."4",5,432,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText("Starting GUI...",font.."4",5,448,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 				x=173
-				y=432
+				y=448
 			end
 			if statetimer > -0.5 and statetimer < -0.1 then
 				surface.SetDrawColor(2,2,2)
@@ -498,6 +541,48 @@ else
 					surface.DrawTexturedRectUV(89+tbl[LastEntered][2][1]*18.5,664+tbl[LastEntered][2][2]*27.5,32,32,0,0,-tbl[LastEntered][2][1],-tbl[LastEntered][2][2],1)					
 					--surface.DrawTexturedRectUV(89+(Cam2Pos and -18.5 or 18.5)*(Train == Cam2E and 1 or -1),104+(Cam2Pos and -1 or 1)*(Train == Cam2E and 27.5 or -27.5),32,32,0,0,(Cam2Pos and 1 or -1)*(Train == Cam2E and 1 or -1),Train == Cam2E and 1 or -1)
 				end
+			end
+			
+		elseif state == 1 and service == 1 then
+			if statetimer > -9.2 then
+				surface.SetDrawColor(21,21,21)
+				surface.DrawRect(0,0,1024,768)
+			end
+			if statetimer > -9.1 and statetimer < -0.5 then
+				draw.SimpleText("Entering setup...",font.."4",1,20,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=190
+				y=20
+			end
+			if statetimer > -8 and statetimer < -0.5 then
+				draw.SimpleText("Initializing system...",font.."4",1,40,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=244
+				y=40
+			end
+			if statetimer > -1 and statetimer < -0.5 then
+				draw.SimpleText("OK!",font.."4",244,40,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=280
+				y=40
+			end
+			if statetimer > -0.8 and statetimer < -0.5 then
+				draw.SimpleText("Starting...",font.."4",5,60,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				x=122
+				y=60
+			end
+			if CurTime()%1 < 0.5 and statetimer > -9.2 and statetimer < -0.5 then
+				draw.SimpleText("_",font.."4",x,y,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+			end
+			if statetimer > 0 then
+				draw.SimpleText("█████████████████████████████████████████████████████████████████████████████████████████████",font.."4",1,1,gray,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText(" CAM SYSTEMS SETUP v1.1                               (C) 2019 Anton Borisovich & НПП САРМАТ ",font.."4",1,1,black,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				
+				for i=1,37 do --background
+				draw.SimpleText("█████████████████████████████████████████████████████████████████████████████████████████████",font.."4",1,i*20,dos_blue,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				end
+				
+				draw.SimpleText("█████████████████████████████████████████████████████████████████████████████████████████████",font.."4",1,748,gray,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText(" Service menu not done yet                                                                   ",font.."4",1,48,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				draw.SimpleText(" Press any key to exit...                                                       ",font.."4",1,748,black,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+				Train:SetNW2Int("CAMSState",2)
 			end
 		end
 	end
