@@ -27,8 +27,8 @@ function ENT:Initialize()
     self.DriverSeat:SetColor(Color(0,0,0,0))
 
     -- Create bogeys
-        self.FrontBogey  = self:CreateBogey(Vector(150,0,-75),Angle(0,180,0),true,"740")    
-        self.RearBogey  = self:CreateBogey(Vector(-195,0,-75),Angle(0,0,0),false,"740")
+        self.FrontBogey  = self:CreateBogey(Vector(150,0,-80),Angle(0,180,0),true,"740")    
+        self.RearBogey  = self:CreateBogey(Vector(-195,0,-80),Angle(0,0,0),false,"740")
         self.FrontCouple = self:CreateCouple(Vector(260,0,-60),Angle(0,0,0),true,"717")
         self.RearCouple  = self:CreateCouple(Vector(-289,0,-60),Angle(0,180,0),false,"717")
 		

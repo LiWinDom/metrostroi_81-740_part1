@@ -64,8 +64,8 @@ function ENT:Initialize()
 	self.LightSensor = self:AddLightSensor(Vector(248,0,-130),Angle(0,90,0))
 	
     -- Create bogeys
-        self.FrontBogey = self:CreateBogey(Vector( 190,0,-75),Angle(0,180,0),true,"740")
-        self.RearBogey  = self:CreateBogey(Vector(-180,0,-75),Angle(0,0,0),false,"740")
+        self.FrontBogey = self:CreateBogey(Vector( 190,0,-80),Angle(0,180,0),true,"740")
+        self.RearBogey  = self:CreateBogey(Vector(-180,0,-80),Angle(0,0,0),false,"740")
         self.FrontCouple = self:CreateCouple(Vector(313,0,-60),Angle(0,0,0),true,"717")
         self.RearCouple  = self:CreateCouple(Vector(-268-6.8,0,-60),Angle(0,180,0),false,"717")
     self.FrontBogey:SetNWBool("Async",true)

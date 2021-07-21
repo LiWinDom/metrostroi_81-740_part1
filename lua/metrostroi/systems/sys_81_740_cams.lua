@@ -133,37 +133,23 @@ if SERVER then
 							timer.Simple(0.2,function()
 								self.ButtonRing = false
 							end)
-							timer.Simple(1,function()
-							self.Cam1,self.Cam1E = true,(self.Tbl[numname][1][2] and Train.WagonList[WagNum] or Train)
-							self.Cam2 = false
-							Train:SetNW2Bool("CAMSCam1Pos",self.Tbl[numname][1][1])
-							Train:SetNW2Entity("CAMSCam2E",nil)
-							if self.Tbl[numname][2] then
-								self.Cam2,self.Cam2E = self.Cam1,(self.Tbl[numname][2][2] and Train.WagonList[WagNum] or Train)
-								Train:SetNW2Entity("CAMSCam2E",self.Cam2E)
-								Train:SetNW2Bool("CAMSCam2Pos",self.Tbl[numname][2][1])
-							end
-							self.Selected = 0
-							if self.State ~= 0 then self.State = 0 end
-							self.LastEntered = numname
-							self.ButtonDelay = false
-						end)
+							timer.Simple(0.8,function()
+								if not IsValid(self) then return end
+								self.Cam1,self.Cam1E = true,(self.Tbl[numname][1][2] and Train.WagonList[WagNum] or Train)
+								self.Cam2 = false
+								Train:SetNW2Bool("CAMSCam1Pos",self.Tbl[numname][1][1])
+								Train:SetNW2Entity("CAMSCam2E",nil)
+								if self.Tbl[numname][2] then
+									self.Cam2,self.Cam2E = self.Cam1,(self.Tbl[numname][2][2] and Train.WagonList[WagNum] or Train)
+									Train:SetNW2Entity("CAMSCam2E",self.Cam2E)
+									Train:SetNW2Bool("CAMSCam2Pos",self.Tbl[numname][2][1])
+								end
+								self.Selected = 0
+								if self.State ~= 0 then self.State = 0 end
+								self.LastEntered = numname
+								self.ButtonDelay = false
+							end)
 						end
-						timer.Simple(1.5,function()
-							self.Cam1,self.Cam1E = true,(self.Tbl[numname][1][2] and Train.WagonList[WagNum] or Train)
-							self.Cam2 = false
-							Train:SetNW2Bool("CAMSCam1Pos",self.Tbl[numname][1][1])
-							Train:SetNW2Entity("CAMSCam2E",nil)
-							if self.Tbl[numname][2] then
-								self.Cam2,self.Cam2E = self.Cam1,(self.Tbl[numname][2][2] and Train.WagonList[WagNum] or Train)
-								Train:SetNW2Entity("CAMSCam2E",self.Cam2E)
-								Train:SetNW2Bool("CAMSCam2Pos",self.Tbl[numname][2][1])
-							end
-							self.Selected = 0
-							if self.State ~= 0 then self.State = 0 end
-							self.LastEntered = numname
-							self.ButtonDelay = false
-						end)
 					end
 				end
 			end
