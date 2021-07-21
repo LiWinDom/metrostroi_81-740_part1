@@ -65,6 +65,9 @@ function ENT:InitializeSounds()
 	
 	self.SoundNames["ring_vityaz"] = "subway_trains/rusich/ring/ring_start.wav"
 	self.SoundPositions["ring_vityaz"] = {100,1e9,Vector(313,25.6,-26.3),0.45}
+	
+	self.SoundNames["ring_cams"] = "subway_trains/rusich/ring/ring_start.wav"
+	self.SoundPositions["ring_cams"] = {100,1e9,Vector(313,25.6,-26.3),0.45}
 
     self.SoundNames["compressor"] = {loop=2,"subway_trains/rusich/compressor/compressor740_start.wav","subway_trains/rusich/compressor/compressor740_loop.wav","subway_trains/rusich/compressor/compressor740_stop.wav"}
     self.SoundPositions["compressor"] = {800,1e9,Vector(-118,-40,-66)}
@@ -525,7 +528,7 @@ ENT.Spawner = {
                     timer.Simple(0.65,function()
                         if not IsValid(ent) then return end
                         ent.CAMS.State = -1
-						ent.CAMS.StateTimer = CurTime()+17
+						ent.CAMS.StateTimer = CurTime()+19
 						ent.BUKP.AutoStart = true
                     end)
                 end

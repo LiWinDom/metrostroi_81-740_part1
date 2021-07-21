@@ -374,6 +374,7 @@ function ENT:Think()
     self:SetPackedBool("BBEWork",power and self.BUV.BBE > 0)
     self:SetPackedBool("WorkBeep",power)
 	self:SetPackedBool("BUKPRing",power and self.BUKP.State == 5 and self.BUKP.ProstRinging)
+	self:SetPackedBool("CAMSRing",power and self.CAMS.State == 0 and self.CAMS.ButtonRing)
 
     local HeadlightsPower = power and (self.KV["KRO3-4"] > 0 or self.KV["KRR5-6"] > 0) and self.Headlights1.Value > 0 and (self.SF13.Value > 0 and self.Headlights2.Value > 0 and 1 or self.SF12.Value > 0 and 0.5) or 0
     --print(0.4+math.max(0,math.min(1,1-(self.Speed-30)/30))*0.5)

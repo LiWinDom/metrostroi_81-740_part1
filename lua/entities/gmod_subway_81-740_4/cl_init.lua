@@ -466,7 +466,7 @@ ENT.ButtonMap["RV"] = {
     }
 }
 ENT.ButtonMap["CAMSButtons"] = {
-    pos = Vector(341.8,45.5,-3.75),
+    pos = Vector(341.8,45.5,-3.72),
     ang = Angle(-1,-90,30),
     width = 100,
     height = 120,
@@ -1747,6 +1747,7 @@ end
     self:Animate("brake_cylinder", self:GetPackedRatio("BC"), 0, 0.746,  64,12)
 	
 	self:SetSoundState("ring_vityaz",self:GetPackedBool("BUKPRing",false) and 1.6 or 0,1)
+	self:SetSoundState("ring_cams",self:GetPackedBool("CAMSRing",false) and 1.6 or 0,1)
 	
 	--Вольтаж
     self:Animate("volt_lv",self:GetPackedRatio("LV"),1,0.712,92,2)
