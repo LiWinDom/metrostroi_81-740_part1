@@ -112,7 +112,7 @@ if SERVER then
 					local WagNum = Train:GetNW2Int("CAMSWagNum")
 					if numname >= 5 and (self.LastEntered ~= numname) then
 						if self.ButtonSilentInstant then
-							self.Cam1,self.Cam1E = true,(self.Tbl[numname][1][2] and Train.WagonList[WagNum] or Train)
+							self.Cam1,self.Cam1E = CurTime()+math.Rand(0.05,0.15),(self.Tbl[numname][1][2] and Train.WagonList[WagNum] or Train)
 							self.Cam2 = false
 							Train:SetNW2Bool("CAMSCam1Pos",self.Tbl[numname][1][1])
 							Train:SetNW2Entity("CAMSCam2E",nil)
@@ -134,7 +134,8 @@ if SERVER then
 								self.ButtonRing = false
 							end)
 							timer.Simple(0.8,function()
-								if not IsValid(self) then return end
+								self.ButtonDelay = false
+								if not IsValid(Train) then return end
 								self.Cam1,self.Cam1E = true,(self.Tbl[numname][1][2] and Train.WagonList[WagNum] or Train)
 								self.Cam2 = false
 								Train:SetNW2Bool("CAMSCam1Pos",self.Tbl[numname][1][1])
@@ -147,7 +148,6 @@ if SERVER then
 								self.Selected = 0
 								if self.State ~= 0 then self.State = 0 end
 								self.LastEntered = numname
-								self.ButtonDelay = false
 							end)
 						end
 					end
@@ -179,6 +179,15 @@ if SERVER then
 				self.State = 0
 				self.ButtonSilentInstant = true
 				self:Trigger("7",true)
+				if Train:GetNW2Int("CAMSWagNum",0) == 0 then
+					local wagn = math.min(8,#Train.WagonList)
+					Train:SetNW2Int("CAMSWagNum",wagn)
+					Train:SetNW2Bool("CAMSLast",Train.WagonList[wagn].WagonNumber > 00200)
+				end
+				if self.Inv == nil then
+					self.Inv = Train:GetWagonNumber() > Train.WagonList[#Train.WagonList]:GetWagonNumber()
+					Train:SetNW2Bool("CAMSInv",Train:GetWagonNumber() > Train.WagonList[#Train.WagonList]:GetWagonNumber())
+				end
 			elseif Train:GetNW2Bool("CAMSRandomError",false) and self.Service == 1 then
 				Train:SetNW2String("CAMSScreenService","menu")
 				Train:SetNW2String("CAMSTipService"," Camera switching beep")
@@ -192,13 +201,7 @@ if SERVER then
 				self.Triggers[v] = Train[v].Value > 0.5
 			end
 		end
-		if self.State == 0 then --work
-			if self.Service == 1 then
-				Train:SetNW2String("CAMSScreenService","menu")
-				Train:SetNW2String("CAMSTipService"," Camera switching beep")
-				self.SelectedService = 1
-				self.State = 1
-			end
+		if self.State == 0 then
 			local cam1,cam2 = false,false
 			for i=1,#Train.WagonList do
 				local train = Train.WagonList[i]
@@ -212,7 +215,8 @@ if SERVER then
 				Train:SetNW2Bool("CAMSCam1C",true)
 				Train:SetNW2Entity("CAMSCam1E",self.Cam1E)
 			else
-				self.Cam1 = true
+				if self.Cam1 and self.Cam1 ~= true and CurTime()-self.Cam1 > 0 then self.Cam1 = true end
+				if not self.Cam1 and cam1 then self.Cam1 = CurTime()+math.Rand(0.05,0.15) end
 				Train:SetNW2Bool("CAMSCam1C",false)
 			end
 			if self.Cam2 == true and (self.LastEntered > 8 or not IsValid(self.Cam2E) or not cam2) then self.Cam2 = false end		
@@ -220,8 +224,8 @@ if SERVER then
 				Train:SetNW2Bool("CAMSCam2C",true)
 				Train:SetNW2Entity("CAMSCam2E",self.Cam2E)
 			else
-				self.Cam2 = true 
-				
+				if self.Cam2 and self.Cam2 ~= true and CurTime()-self.Cam2 > 0 then self.Cam2 = true end
+				if not self.Cam2 and cam2 then self.Cam2 = CurTime()+math.Rand(0.05,0.15) end
 				Train:SetNW2Bool("CAMSCam2C",false)
 			end		
 		end
@@ -419,13 +423,13 @@ else
 			local Cam2,Cam2E,Cam2Pos = train:GetNW2Bool("CAMSCam2C"),train:GetNW2Entity("CAMSCam2E"),train:GetNW2Bool("CAMSCam2Pos",false)		
 			
             if Cam1 and not Cam2 and lastenter then
-				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam1",0,self.Cam1,Cam1E,Vector(300,-70,55)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(10,180,0),1024,768,1,1,1)
+				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam1",math.Rand(0.05,0.15),self.Cam1,Cam1E,Vector(300,-70,55)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(10,180,0),1024,768,1,1,1)
 			end
             if Cam1 then
-				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam3",0,self.Cam2,Cam1E,Vector(300,-74,55)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
+				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam3",math.Rand(0.05,0.15),self.Cam2,Cam1E,Vector(300,-74,55)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
 			end
 			if Cam2 then
-				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam2",0,self.Cam3,Cam2E,Vector(300,-70,55)+(Cam2Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
+				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam2",math.Rand(0.05,0.15),self.Cam3,Cam2E,Vector(300,-70,55)+(Cam2Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
 			end		
         end
 		
