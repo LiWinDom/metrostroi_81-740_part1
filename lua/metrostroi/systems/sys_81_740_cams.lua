@@ -133,7 +133,7 @@ if SERVER then
 							timer.Simple(0.2,function()
 								self.ButtonRing = false
 							end)
-							timer.Simple(0.8,function()
+							timer.Simple(math.Rand(0.7, 1.5),function()
 								self.ButtonDelay = false
 								if not IsValid(Train) then return end
 								self.Cam1,self.Cam1E = true,(self.Tbl[numname][1][2] and Train.WagonList[WagNum] or Train)
