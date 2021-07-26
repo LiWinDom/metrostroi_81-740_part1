@@ -1746,8 +1746,8 @@ end
     self:Animate("train_line", self:GetPackedRatio("TL"),   0, 0.753,  4096,2)
     self:Animate("brake_cylinder", self:GetPackedRatio("BC"), 0, 0.746,  64,12)
 	
-	self:SetSoundState("ring_vityaz",self:GetPackedBool("BUKPRing",false) and 1.6 or 0,1)
-	self:SetSoundState("ring_cams",self:GetPackedBool("CAMSRing",false) and 1.6 or 0,1)
+    self:SetSoundState("ring_vityaz",self:GetPackedBool("BUKPRing",false) and 1.6 or 0,1)
+    self:SetSoundState("ring_cams",self:GetPackedBool("CAMSRing",false) and 1.6 or 0,1)
 	
 	--Вольтаж
     self:Animate("volt_lv",self:GetPackedRatio("LV"),1,0.712,92,2)
