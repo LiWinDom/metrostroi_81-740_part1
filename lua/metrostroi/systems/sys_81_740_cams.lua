@@ -257,49 +257,49 @@ if SERVER then
 			end
 			if Train:GetNW2Int("CAMSButton",0) == 10 and self.SelectedService == 2 and self.PressedService == 0 and Train:GetNW2String("CAMSScreenService","menu") == "menu" then
 				self.PressedService = 1
-				if Train:GetNW2Int("CAMSFPS",5) == 01 then
+				if Train:GetNW2Int("CAMSFPS",05) == 01 then
 					Train:SetNW2Int("CAMSFPS",03)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 03 then
-					Train:SetNW2Int("CAMSFPS",5)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 5 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 03 then
+					Train:SetNW2Int("CAMSFPS",05)
+				elseif Train:GetNW2Int("CAMSFPS",05) == 05 then
 					Train:SetNW2Int("CAMSFPS",10)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 10 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 10 then
 					Train:SetNW2Int("CAMSFPS",15)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 15 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 15 then
 					Train:SetNW2Int("CAMSFPS",20)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 20 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 20 then
 					Train:SetNW2Int("CAMSFPS",25)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 25 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 25 then
 					Train:SetNW2Int("CAMSFPS",30)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 30 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 30 then
 					Train:SetNW2Int("CAMSFPS",40)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 40 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 40 then
 					Train:SetNW2Int("CAMSFPS",50)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 50 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 50 then
 					Train:SetNW2Int("CAMSFPS",60)
 				end
 			end
 			if Train:GetNW2Int("CAMSButton",0) == 9 and self.SelectedService == 2 and self.PressedService == 0 and Train:GetNW2String("CAMSScreenService","menu") == "menu" then
 				self.PressedService = 1
-				if Train:GetNW2Int("CAMSFPS",5) == 03 then
+				if Train:GetNW2Int("CAMSFPS",05) == 03 then
 					Train:SetNW2Int("CAMSFPS",01)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 5 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 05 then
 					Train:SetNW2Int("CAMSFPS",03)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 10 then
-					Train:SetNW2Int("CAMSFPS",5)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 15 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 10 then
+					Train:SetNW2Int("CAMSFPS",05)
+				elseif Train:GetNW2Int("CAMSFPS",05) == 15 then
 					Train:SetNW2Int("CAMSFPS",10)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 20 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 20 then
 					Train:SetNW2Int("CAMSFPS",15)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 25 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 25 then
 					Train:SetNW2Int("CAMSFPS",20)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 30 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 30 then
 					Train:SetNW2Int("CAMSFPS",25)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 40 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 40 then
 					Train:SetNW2Int("CAMSFPS",30)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 50 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 50 then
 					Train:SetNW2Int("CAMSFPS",40)
-				elseif Train:GetNW2Int("CAMSFPS",5) == 60 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 60 then
 					Train:SetNW2Int("CAMSFPS",50)
 				end
 			end
@@ -352,25 +352,25 @@ if SERVER then
 			if Train:GetNW2Int("CAMSButton",0) == 6 and self.SelectedService == 2 and self.PressedService == 0 and Train:GetNW2String("CAMSScreenService","menu") == "menu" then
 				self.PressedService = 1
 				Train:SetNW2String("CAMSScreenService","fps_select")
-				if Train:GetNW2Int("CAMSFPS",5) == 03 then
+				if Train:GetNW2Int("CAMSFPS",05) == 03 then
 					self.SelectedService = 2
-				elseif Train:GetNW2Int("CAMSFPS",5) == 5 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 05 then
 					self.SelectedService = 3
-				elseif Train:GetNW2Int("CAMSFPS",5) == 10 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 10 then
 					self.SelectedService = 4
-				elseif Train:GetNW2Int("CAMSFPS",5) == 15 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 15 then
 					self.SelectedService = 5
-				elseif Train:GetNW2Int("CAMSFPS",5) == 20 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 20 then
 					self.SelectedService = 6
-				elseif Train:GetNW2Int("CAMSFPS",5) == 25 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 25 then
 					self.SelectedService = 7
-				elseif Train:GetNW2Int("CAMSFPS",5) == 30 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 30 then
 					self.SelectedService = 8
-				elseif Train:GetNW2Int("CAMSFPS",5) == 40 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 40 then
 					self.SelectedService = 9
-				elseif Train:GetNW2Int("CAMSFPS",5) == 50 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 50 then
 					self.SelectedService = 10
-				elseif Train:GetNW2Int("CAMSFPS",5) == 60 then
+				elseif Train:GetNW2Int("CAMSFPS",05) == 60 then
 					self.SelectedService = 11
 				else
 					self.SelectedService = 1
@@ -397,7 +397,7 @@ if SERVER then
 				elseif self.SelectedService == 2 then
 					Train:SetNW2Int("CAMSFPS",03)
 				elseif self.SelectedService == 3 then
-					Train:SetNW2Int("CAMSFPS",5)
+					Train:SetNW2Int("CAMSFPS",05)
 				elseif self.SelectedService == 4 then
 					Train:SetNW2Int("CAMSFPS",10)
 				elseif self.SelectedService == 5 then
@@ -432,7 +432,7 @@ if SERVER then
 			if Train:GetNW2Int("CAMSButton",0) == 6 and self.SelectedService == 4 and self.PressedService == 0 and Train:GetNW2String("CAMSScreenService","menu") == "menu" then
 				self.PressedService = 1
 				Train:SetNW2Bool("CAMSBeep",true)
-				Train:SetNW2Int("CAMSFPS",5)
+				Train:SetNW2Int("CAMSFPS",05)
 				Train:SetNW2String("CAMSLanguage",GetConVar("metrostroi_language"):GetString())
 				if Train:GetNW2String("CAMSLanguage","en") == "ru" then
 					Train:SetNW2String("CAMSLanguageText","Russian")
@@ -530,7 +530,7 @@ else
 		--self.scalex,self.scaley = ScrW()/1768*1.725,ScrH()/992*1.5 
 
 		self.Train:SetNW2Bool("CAMSBeep",true)
-		self.Train:SetNW2Int("CAMSFPS", 5)
+		self.Train:SetNW2Int("CAMSFPS", 05)
 		self.Train:SetNW2String("CAMSLanguage",GetConVar("metrostroi_language"):GetString())
 		if self.Train:GetNW2String("CAMSLanguage","en") == "ru" then
 			self.Train:SetNW2String("CAMSLanguageText","Russian")
@@ -562,13 +562,13 @@ else
 			local Cam2,Cam2E,Cam2Pos = train:GetNW2Bool("CAMSCam2C"),train:GetNW2Entity("CAMSCam2E"),train:GetNW2Bool("CAMSCam2Pos",false)		
 			
             if Cam1 and not Cam2 and lastenter then
-				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam1",1/train:GetNW2Int("CAMSFPS",5),self.Cam1,Cam1E,Vector(300,-70,55)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(10,180,0),1024,768,1,1,1)
+				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam1",1/train:GetNW2Int("CAMSFPS",05),self.Cam1,Cam1E,Vector(300,-70,55)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(10,180,0),1024,768,1,1,1)
 			end
             if Cam1 then
-				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam3",1/train:GetNW2Int("CAMSFPS",5),self.Cam2,Cam1E,Vector(300,-74,55)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
+				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam3",1/train:GetNW2Int("CAMSFPS",05),self.Cam2,Cam1E,Vector(300,-74,55)+(Cam1Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
 			end
 			if Cam2 then
-				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam2",1/train:GetNW2Int("CAMSFPS",5),self.Cam3,Cam2E,Vector(300,-70,55)+(Cam2Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
+				Metrostroi.RenderCamOnRT(train,CamsPos,"Cam2",1/train:GetNW2Int("CAMSFPS",05),self.Cam3,Cam2E,Vector(300,-70,55)+(Cam2Pos and Vector(0,144,0) or Vector(0,0,0)),Angle(5,180,0),1024,768,1,1,1)
 			end		
         end
 		
@@ -860,14 +860,18 @@ else
 						end
 					end
 					if Train:GetNW2Int("CAMSSelectedService",0) == 2 then
-						if Train:GetNW2Int("CAMSFPS",05) < 10 then
-							draw.SimpleText("    ███████████████",font.."3",232,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+						draw.SimpleText("    ████████████████",font.."3",232,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+						if Train:GetNW2Int("CAMSFPS", 05) < 10 then
+							draw.SimpleText("    Camera FPS: [0"..Train:GetNW2Int("CAMSFPS",05).."]",font.."3",232,384,black,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 						else
-							draw.SimpleText("    ████████████████",font.."3",232,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+							draw.SimpleText("    Camera FPS: ["..Train:GetNW2Int("CAMSFPS",05).."]",font.."3",232,384,black,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 						end
-						draw.SimpleText("    Camera FPS: ["..Train:GetNW2Int("CAMSFPS",05).."]",font.."3",232,384,black,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 					else
-						draw.SimpleText("    Camera FPS: ["..Train:GetNW2Int("CAMSFPS",05).."]",font.."3",232,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+						if Train:GetNW2Int("CAMSFPS", 05) < 10 then
+							draw.SimpleText("    Camera FPS: [0"..Train:GetNW2Int("CAMSFPS",05).."]",font.."3",232,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+						else
+							draw.SimpleText("    Camera FPS: ["..Train:GetNW2Int("CAMSFPS",05).."]",font.."3",232,384,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+						end
 					end
 					
 					if Train:GetNW2Int("CAMSSelectedService",0) == 3 then
@@ -959,9 +963,9 @@ else
 					end
 					if Train:GetNW2Int("CAMSSelectedService",0) == 3 then
 						draw.SimpleText("   ██",font.."3",394,256,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-						draw.SimpleText("   5",font.."3",394,256,black,TEXT_ALIGN_left,TEXT_ALIGN_LEFT)
+						draw.SimpleText("   05",font.."3",394,256,black,TEXT_ALIGN_left,TEXT_ALIGN_LEFT)
 					else
-						draw.SimpleText("   5",font.."3",394,256,white,TEXT_ALIGN_left,TEXT_ALIGN_LEFT)
+						draw.SimpleText("   05",font.."3",394,256,white,TEXT_ALIGN_left,TEXT_ALIGN_LEFT)
 					end
 					if Train:GetNW2Int("CAMSSelectedService",0) == 4 then
 						draw.SimpleText("   ██",font.."3",394,288,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
