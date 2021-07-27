@@ -87,7 +87,7 @@ if SERVER then
 		if self.State == -1 then
 			if value then
 				local statetimer = Train:GetNW2Int("CAMSTimer",0)/20
-				if statetimer > -11.5 and statetimer < -0.5 then
+				if statetimer > -11.5 and statetimer <= -8.9 then
 					self.Service = 1
 				end
 			end
@@ -149,7 +149,7 @@ if SERVER then
 		--if self.State == -4 and not self.Power then self.StateTimer = CurTime()+math.Rand(10,12) end
 		if self.State == -4 and self.Power then --turned off
 			self.State = -3 
-			self.StateTimer = CurTime() + math.Rand(2.0, 4.0)
+			self.StateTimer = CurTime() + 3
 			self.Service = 0
 		elseif self.Power and self.State == -3 and CurTime()-self.StateTimer > 0 then --no signal screen
 			self.State = -2
@@ -686,7 +686,7 @@ else
 					draw.SimpleText("║ █▀▀█ █▀▀█ █▀▄▀█  █▀▀▀█ █   █ █▀▀▀█ ▀▀█▀▀ █▀▀▀ █▀▄▀█ █▀▀▀█ ║",font.."4",1,220,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 					draw.SimpleText("║ █    █▄▄█ █ █ █  ▀▀▀▄▄ █▄▄▄█ ▀▀▀▄▄   █   █▀▀▀ █ █ █ ▀▀▀▄▄ ║",font.."4",1,240,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 					draw.SimpleText("║ █▄▄█ █  █ █   █  █▄▄▄█   █   █▄▄▄█   █   █▄▄▄ █   █ █▄▄▄█ ║",font.."4",1,260,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-					draw.SimpleText("╚═══════════════════════╕Version 3.2╒═══════════════════════╝",font.."4",1,280,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+					draw.SimpleText("╚═══════════════════════╕Version 3.3╒═══════════════════════╝",font.."4",1,280,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 					x=1
 					y=300
 				end
