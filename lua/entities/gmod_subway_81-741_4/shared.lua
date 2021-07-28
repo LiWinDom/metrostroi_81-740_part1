@@ -160,4 +160,4 @@ ENT.SubwayTrain = {
     Manufacturer = "MVM",
     EKKType = 740
 }
-ENT.NumberRanges = {{0100,0300}}
+ENT.NumberRanges = {{0681,0683},{0735,0918}}

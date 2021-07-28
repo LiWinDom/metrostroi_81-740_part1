@@ -40,18 +40,11 @@ function TRAIN_SYSTEM:Think(dT)
 	local Train = self.Train
 	local Tspeed = Train.Speed
 	--self.Timer = self.Timer or CurTime()
-	local power = Train.Electric.Battery80V > 62 
+	local power = Train.Electric.Battery80V > 62 and Train.SFV34.Value == 1 and Train.ALSFreqBlock.Value ~= 1
 	local RV = (1-Train.KV["KRO5-6"]) 	-- + Train.KV["KRR15-16"]  + (1-Train.SF2.Value)	
 	
-	if Train.ALSFreqBlock.Value == 0 or Train.ALSFreqBlock.Value == 2 or Train.ALSFreqBlock.Value == 3  then --ВП
-		if Train.SFV34.Value == 1 then
-			FORCE_OFF = false
-		else
-			FORCE_OFF = true
-		end
-	end
-	self.Prost = power and Train.BUKP.Prost and Train.BUKP.State == 5 and Train:GetNW2Int("VityazMainMsg",0) == 0 and RV > 0 and not FORCE_OFF
-	self.Kos = power and Train.BUKP.Kos and Train.BUKP.State == 5 and Train:GetNW2Int("VityazMainMsg",0) == 0 and RV > 0 and not FORCE_OFF
+	self.Prost = power and Train.BUKP.Prost and Train.BUKP.State == 5 and Train:GetNW2Int("VityazMainMsg",0) == 0 and RV > 0
+	self.Kos = power and Train.BUKP.Kos and Train.BUKP.State == 5 and Train:GetNW2Int("VityazMainMsg",0) == 0 and RV > 0
 	if not power and (self.Metka1 or self.BlockDoorsL or self.BlockDoorsR) then
 		self.BlockDoorsL = false			
 		self.BlockDoorsR = false
@@ -305,7 +298,7 @@ function TRAIN_SYSTEM:Think(dT)
 			self.Programm = false
 		end
 	end
-	if self.Kos then--and self.ProstActive == 0 then
+	if self.Kos and self.ProstActive == 0 then
 		if not self.Prost then
 			if self.Metka[4] or self.Metka[2] or self.Metka[1] then
 				self.sum = (self.sum + (self.v0+Train.Speed*Train.SpeedSign)*self.DeltaTime/7.2)

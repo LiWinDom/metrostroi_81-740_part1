@@ -373,9 +373,6 @@ function ENT:InitializeSystems()
     --self:LoadSystem("Tickers","81_760_Ticker")
     --self:LoadSystem("PassSchemes","81_740_PassScheme")
 	
-	if magnitola740 then
-		--self:LoadSystem("MVT","81_740_Magnitola") --for MVT-01 addon
-	end
 	--self:LoadSystem("81_740_RED_LAMPS")
 	self:LoadSystem("IGLA_CBKI","IGLA_740_CBKI")
 	self:LoadSystem("IGLA_PCBK","IGLA_740_PCBK")
@@ -416,7 +413,7 @@ ENT.SubwayTrain = {
     },
     EKKType = 740
 }
-ENT.NumberRanges = {{0190,0337}}
+ENT.NumberRanges = {{0154,0155},{0190,0337}}
 local Texture = {}
 local Announcer = {}
 for k,v in pairs(Metrostroi.AnnouncementsASNP or {}) do Announcer[k] = v.name or k end
