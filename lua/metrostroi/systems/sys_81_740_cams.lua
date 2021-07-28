@@ -529,20 +529,20 @@ else
 		
 		--self.scalex,self.scaley = ScrW()/1768*1.725,ScrH()/992*1.5 
 
-		self.Train:SetNW2Bool("CAMSBeep",true)
+		self.Train:SetNW2Bool("CAMSBeep", true)
 		self.Train:SetNW2Int("CAMSFPS", 05)
 		self.Train:SetNW2String("CAMSLanguage",GetConVar("metrostroi_language"):GetString())
-		if self.Train:GetNW2String("CAMSLanguage","en") == "ru" then
-			self.Train:SetNW2String("CAMSLanguageText","Russian")
+		if self.Train:GetNW2String("CAMSLanguage", "en") == "ru" then
+			self.Train:SetNW2String("CAMSLanguageText", "Russian")
 		else
-			self.Train:SetNW2String("CAMSLanguageText","English")
+			self.Train:SetNW2String("CAMSLanguageText", "English")
 		end
-		if math.random(1,200) == 200 then
-			self.Train:SetNW2Bool("CAMSCUMS",true)
+		if math.random(1, 200) == 200 then
+			self.Train:SetNW2Bool("CAMSCUMS", true)
 		else
-			self.Train:SetNW2Bool("CAMSCUMS",false)
+			self.Train:SetNW2Bool("CAMSCUMS", false)
 		end
-		self.Train:SetNW2Int("CAMSYear",math.random(2008,2009))
+		self.Train:SetNW2Int("CAMSYear", math.random(2008, 2013))
 		self.Train:SetNW2Float("CAMSRebootTime", 0)
     end
     local CamRT = surface.GetTextureID( "pp/rt" )
