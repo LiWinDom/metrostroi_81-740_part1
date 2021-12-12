@@ -1467,8 +1467,8 @@ ENT.ClientProps["PassSchemesR"] = {
 }
 ]]
 ENT.ButtonMap["GV"] = {
-    pos = Vector(128,63,-52-15),
-    ang = Angle(0,180,90),
+    pos = Vector(-45,65,-73),
+    ang = Angle(0,180,135),
     width = 170,
     height = 150,
     scale = 0.1,
@@ -1480,11 +1480,18 @@ ENT.ButtonMap["GV"] = {
         }},
     }
 }
+ENT.ClientProps["gv"] = {
+    model = "models/metrostroi/81-717/gv.mdl",
+    pos = Vector(-51,55,-76),
+    ang = Angle(-90,90,-90),
+    color = Color(150,255,255),
+    hide = 0.5,
+}
 
 ENT.ClientProps["gv_wrench"] = {
-    model = "models/metrostroi/81-717/reverser.mdl",
-    pos = Vector(126.4,50,-60-23.5),
-    ang = Angle(0,90,0),
+    model = "models/metrostroi_train/reversor/reversor_classic.mdl",
+    pos = ENT.ClientProps["gv"].pos,
+    ang = Angle(-90,90,-90),
     hide = 0.5,
 }
 ENT.ClientProps["door_cab_m"] = {

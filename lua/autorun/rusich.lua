@@ -1,6 +1,17 @@
 vedro740 = vedro740 or {} --check 81-740 addon availability by other addons
 --beb = beb or {} --uncomment to disable als autofreq
 
+
+--[[	spawn correcting guide for server owners 
+
+	insert this into /lua/weapons/gmod_toold/stools/train_spawner.lua after line 210 for fixing the rotation of wagons
+	
+		if (self.Train.ClassName == "gmod_subway_81-740_4") then
+			rot = i % 2 == 1 or i==self.Settings.WagNum
+		end
+		
+]]
+
 --custom bogey and couple
 timer.Simple(0,function()
 	if not Metrostroi then return end

@@ -1,6 +1,9 @@
 --------------------------------------------------------------------------------
 -- БОИ (Блок Обработки Информации) и БВЗ (Блок Видеозеркал)
 --------------------------------------------------------------------------------
+
+-- Надо бы уже вырезать этот DOS и сделать как в оригинале, но многие просили оставить выбор FPS, так что я оставил
+
 Metrostroi.DefineSystem("81_740_CAMS")
 TRAIN_SYSTEM.DontAccelerateSimulation = true
 
@@ -678,7 +681,7 @@ else
 					draw.SimpleText("║ █▀▀█ █  █ █▀▄▀█  █▀▀▀█ █   █ █▀▀▀█ ▀▀█▀▀ █▀▀▀ █▀▄▀█ █▀▀▀█ ║",font.."4",1,220,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 					draw.SimpleText("║ █    █  █ █ █ █  ▀▀▀▄▄ █▄▄▄█ ▀▀▀▄▄   █   █▀▀▀ █ █ █ ▀▀▀▄▄ ║",font.."4",1,240,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 					draw.SimpleText("║ █▄▄█ █▄▄█ █   █  █▄▄▄█   █   █▄▄▄█   █   █▄▄▄ █   █ █▄▄▄█ ║",font.."4",1,260,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
-					draw.SimpleText("╚═══════════════════════╕Version 228╒═══════════════════════╝",font.."4",1,280,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
+					draw.SimpleText("╚═══════════════════════╕Version CUM╒═══════════════════════╝",font.."4",1,280,white,TEXT_ALIGN_LEFT,TEXT_ALIGN_LEFT)
 					x=1
 					y=300
 				else
