@@ -24,3 +24,6 @@ n - A-Z update for the day
 
 210811a was released august, 11 in 22:05 of 2021 year
 
+### Content
+Almost all textures are stored in [second part](https://github.com/LiWinDom/metrostroi_81-740_part2)
+
