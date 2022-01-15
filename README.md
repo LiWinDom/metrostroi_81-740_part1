@@ -18,9 +18,9 @@ n - A-Z update for the day
 
 #### for example:
 
-210810a was released august, 10 in 10:02
+210810a was released august, 10 in 10:02 of 2021 year
 
-210810b was released august, 10 in 13:50
+210810b was released august, 10 in 13:50 of 2021 year
 
-210811a was released august, 11 in 22:05
+210811a was released august, 11 in 22:05 of 2021 year
 
