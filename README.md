@@ -1,6 +1,7 @@
-## Rusich (81-740) Russian train for Garry's Mod Metrostroi addon
+# Rusich (81-740) Russian train for Garry's Mod Metrostroi addon
 
-Latest test release [here](https://github.com/LiWinDom/metrostroi_81-740_part1/releases/latest) (GitHub)
+## OUTDATED! NEW RELEASES ARE [HERE](https://github.com/Nomos2/Metrostroi81-740.4_Rusich_sohlenenka) (GitHub)
+
 
 Latest stable release [here](https://steamcommunity.com/sharedfiles/filedetails/?id=2374733400) (Steam Workshop)
 
@@ -27,3 +28,4 @@ n - A-Z update for the day
 ### Content
 Almost all textures are stored in [second part](https://github.com/LiWinDom/metrostroi_81-740_part2)
 
+## OUTDATED! NEW RELEASES ARE [HERE](https://github.com/Nomos2/Metrostroi81-740.4_Rusich_sohlenenka) (GitHub)
